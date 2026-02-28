@@ -6,7 +6,7 @@
 
 ## Key Findings
 
-This experiment was run on **Claude claude-4.6-sonnet-medium** (opus 4.6). Both setups were instructed to operate as autonomously as possible — from data exploration through to a completed research paper. Human intervention was minimal throughout: the researcher occasionally issued simple continuation prompts (e.g., "continue") but did not guide the scientific direction, correct methods, or edit the writing.
+This experiment was run on **Claude Opus 4.6**. Both setups were instructed to operate as autonomously as possible — from data exploration through to a completed research paper. Human intervention was minimal throughout: the researcher occasionally issued simple continuation prompts (e.g., "continue") but did not guide the scientific direction, correct methods, or edit the writing.
 
 The central result is straightforward: **opus 4.6 can already produce scientific research papers independently.** Both agents — with and without Amplify — completed the full research cycle and delivered manuscripts. This is a demonstration of large language model capability, not a limitation.
 
