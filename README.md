@@ -4,6 +4,18 @@
 
 ---
 
+## Key Findings
+
+This experiment was run on **Claude claude-4.6-sonnet-medium** (opus 4.6). Both setups were instructed to operate as autonomously as possible — from data exploration through to a completed research paper. Human intervention was minimal throughout: the researcher occasionally issued simple continuation prompts (e.g., "continue") but did not guide the scientific direction, correct methods, or edit the writing.
+
+The central result is straightforward: **opus 4.6 can already produce scientific research papers independently.** Both agents — with and without Amplify — completed the full research cycle and delivered manuscripts. This is a demonstration of large language model capability, not a limitation.
+
+**Whether Amplify is used determines the quality ceiling, not whether a paper gets written.** With Amplify, the agent followed a structured research methodology — literature review, multi-agent problem validation, hypothesis-driven design, convergence analysis — and produced a more coherent, theoretically grounded population genetics paper. Without Amplify, the agent still produced a complete, technically solid paper, but defaulted to a more computational, descriptive approach with a narrower scope.
+
+**More human involvement would improve both outputs.** A researcher actively engaged at key decision points — refining the research question, connecting disparate analyses, selecting which figures to include — would elevate the quality of either setup. This is entirely expected: the autonomous experiments here represent a lower bound on what the human–AI combination can achieve.
+
+---
+
 ## ⚠️ Important Disclaimer
 
 > **All scientific content in this repository — experiments, analyses, figures, and papers — was generated entirely by AI agents operating autonomously. This repository exists solely as a system performance benchmark for AI research automation tools. The papers have NOT been peer-reviewed. Do not treat any scientific claims herein as validated research. Please exercise critical judgment when reading.**
