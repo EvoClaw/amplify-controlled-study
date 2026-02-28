@@ -46,12 +46,13 @@ Both agents produced complete research manuscripts. PDFs are included in this re
 - Found a continuous, monotonic FST gradient with variant size (SNV > INDEL > SV), consistent with size-dependent purifying selection.
 - Identified asymmetric selective constraint between insertions and deletions (insertions ~25% lower FST than deletions).
 - Used Procrustes analysis to show SV-SNV concordance plateaus at r ≈ 0.60 regardless of variant count — establishing the discordance as biology, not sampling noise.
-- Produced 10+ figures covering PCA overlays, FST heatmaps, SFS comparisons, size-stratified analysis, and population trees.
 - Writing style is clearly population genetics: hypothesis-driven, with explicit reference to classical population genetics theory (Wright's FST, purifying selection, bottleneck demography).
+- Ran extensive analyses and generated 16 distinct figures in total.
 
 **Limitations observed:**
 - SV-based analyses are inherently limited by the smaller SV catalog (18.5K vs. millions of SNVs/INDELs).
 - The insertion-deletion asymmetry finding has a caveat (differential short-read ascertainment), which the paper acknowledges.
+- **Figure integration gap:** The agent produced 16 distinct figures across the `figures/` directory, but only 4 were incorporated into the final paper (Fig. 1 PCA comparison, convergence curve, size-stratified FST, population trees). Many analytical results — FST heatmaps, SFS comparisons, cross-type FST, concordance summaries, SFS KS tests, and more — were computed and plotted but never written up. This suggests a disconnect between the execution phase and the paper-writing phase: the agent ran more analyses than it could coherently narrate.
 
 ---
 
@@ -84,7 +85,8 @@ Both agents produced complete research manuscripts. PDFs are included in this re
 | Methodological novelty | Convergence analysis framework (original) | NMF borrowed from cancer genomics |
 | Scientific cohesion | Unified narrative, clear takeaway | Multiple observations, fragmented story |
 | Population genetics depth | High — classical theory well-integrated | Moderate — computation-heavy |
-| Figure count | 10+ publication-grade figures | 5 figures |
+| Figures produced | 16 distinct figures generated | 5 figures generated |
+| Figures in paper | 4 (large gap vs. produced) | 5 (fully integrated) |
 | Algorithmic content | Minimal (bioinformatics pipeline) | Moderate (NMF decomposition) |
 | Paper quality | Closer to a population genetics journal paper | Closer to a computational genomics report |
 
