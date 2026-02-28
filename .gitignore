@@ -1,0 +1,51 @@
+# Large genomic data files
+**/1000GP/
+amplify/results/
+baseline/analysis/results/
+
+# Intermediate PLINK/PLINK2 files
+*.bed
+*.bim
+*.fam
+*.pgen
+*.pvar
+*.psam
+*.afreq
+*.nosex
+*.nophenofile
+
+# Compiled LaTeX auxiliary files
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.toc
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+
+# Data intermediates
+*.vcf.gz
+*.bcf
+*.bcf.csi
+*.vcf.gz.tbi
+*.vcf
+*.bam
+*.cram
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Log files (large)
+*.log

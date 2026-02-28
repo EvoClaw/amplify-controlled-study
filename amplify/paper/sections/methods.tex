@@ -1,0 +1,65 @@
+\section*{Materials and methods}
+
+\subsection*{Dataset and sample selection}
+
+We analyzed the 2022 high-coverage release of the 1000 Genomes Project (1kGP), comprising 3,202 individuals from 26 populations spanning five continental super-populations: African (AFR, 7 populations, $n = 893$), European (EUR, 5 populations, $n = 633$), East Asian (EAS, 5 populations, $n = 617$), South Asian (SAS, 5 populations, $n = 601$), and admixed American (AMR, 4 populations, $n = 458$) \citep{byrskaBishop2022}. All samples were sequenced to $\sim$30$\times$ coverage on the Illumina NovaSeq 6000 platform and jointly genotyped using the GATK best-practices pipeline, with phasing performed by SHAPEIT4 \citep{delaneau2019}. The resulting call set provides phased genotypes for single nucleotide variants (SNVs), short insertions and deletions (INDELs), and structural variants (SVs) across the genome. We restricted all analyses to autosomes (chromosomes 1--22), excluding the X chromosome to avoid complications from hemizygous genotypes in males. All 3,202 samples were retained without relatedness filtering; the 1kGP cohort includes trios and parent--offspring pairs by design to facilitate phasing, but the presence of related individuals has minimal impact on allele frequency estimation and population-level PCA when sample sizes exceed several hundred per population \citep{patterson2006}.
+
+\subsection*{Variant extraction and quality filtering}
+
+Variants were extracted independently for each type from per-chromosome VCF files using \texttt{bcftools} v1.17 \citep{danecek2021}. We applied biallelic filtering and type-specific quality thresholds calibrated to the distinct abundance, functional impact, and genotyping properties of each variant class:
+
+\begin{itemize}
+    \item \textbf{SNVs}: Biallelic single nucleotide polymorphisms with minor allele frequency (MAF) $\geq 0.01$ and genotype missingness $< 5\%$. This retained 12,673,663 variants genome-wide.
+    \item \textbf{INDELs}: Biallelic insertions and deletions with MAF $\geq 0.01$ and missingness $< 5\%$. This retained 3,338,774 variants genome-wide.
+    \item \textbf{SVs}: Biallelic variants where either the reference or alternate allele exceeded 50~bp in length (following the conventional SV size threshold \citep{alkan2011}), with MAF $\geq 0.005$ and missingness $< 10\%$. The more permissive MAF and missingness thresholds for SVs reflect their lower abundance and greater genotyping uncertainty inherent to short-read-based SV detection \citep{ho2020}. This retained 18,519 variants genome-wide.
+\end{itemize}
+
+Chromosomes were processed in parallel (11 concurrent jobs) and per-chromosome VCFs were merged using \texttt{bcftools concat}. Merged VCFs were converted to PLINK2 binary format (\texttt{.pgen/.pvar/.psam}) using \texttt{plink2} v2.00a \citep{chang2015}, with the \texttt{--new-id-max-allele-len 300 missing} flag to accommodate long allele string representations in INDEL and SV records.
+
+\subsection*{Linkage disequilibrium pruning}
+
+To produce sets of approximately independent markers for principal component analysis, we performed LD pruning on SNVs and INDELs using \texttt{plink2 --indep-pairwise} with a window of 50 variants, a step size of 5, and a pairwise $r^2$ threshold of 0.2, following standard practice for population structure analyses \citep{abdellaoui2013, price2006}. This retained 2,291,979 LD-pruned SNVs and 1,190,449 LD-pruned INDELs. SVs were not subjected to LD pruning because their sparse genomic distribution ($\sim$18,500 variants across 22 autosomes, or roughly one per 165~kb) renders inter-variant LD negligible.
+
+\subsection*{Principal component analysis}
+
+PCA was performed independently for each variant type using \texttt{plink2 --pca 20}, extracting the top 20 principal components from the genetic relationship matrix. All 3,202 samples were included in each analysis. For SNVs and INDELs, PCA was computed on the LD-pruned marker sets; for SVs, PCA was computed on the full post-filter set of 18,519 variants. The first two PCs captured the majority of genetic variance for all three types (SNV PC1: 54.4\%, PC2: 24.7\%; INDEL PC1: 54.6\%, PC2: 23.3\%; SV PC1: 50.7\%, PC2: 20.6\%).
+
+\subsection*{Procrustes analysis of PCA concordance}
+
+To quantify the geometric concordance of population structure across variant types, we applied Procrustes superimposition \citep{gower1975} to the first 10 PCs from each pairwise combination of variant types. We selected 10 PCs as this captures both major continental structure (PCs 1--4) and finer sub-continental differentiation (PCs 5--10); results were qualitatively robust to this choice. Each PC matrix ($3{,}202 \times 10$) was standardized to zero mean and unit variance per component prior to analysis. Procrustes analysis finds the optimal rotation, reflection, and uniform scaling that minimizes the sum of squared distances between two point configurations. We report the Procrustes correlation, defined as $1 - d^2$ where $d$ is the Procrustes distance after optimal superimposition, implemented via \texttt{scipy.spatial.procrustes} \citep{virtanen2020}. Statistical significance was assessed using a permutation test with 1,000 random permutations of sample labels; the $p$-value was computed as the proportion of permuted Procrustes correlations exceeding the observed value.
+
+\subsection*{Convergence analysis}
+
+To distinguish genuine biological discordance from the statistical effects of unequal variant counts, we developed a convergence analysis framework. LD-pruned SNVs were randomly subsampled (without replacement) to nine target counts spanning three orders of magnitude: 500; 1,000; 5,000; 10,000; 18,519 (matching the SV count); 50,000; 100,000; 500,000; and 1,000,000. At each target count, PCA was recomputed on the subsampled SNV set using \texttt{plink2 --pca 20}, and Procrustes concordance was measured against the full INDEL and full SV PCA embeddings. Three independent random seeds (42, 123, 456) were used at each count to assess sampling variability. The rationale is straightforward: if cross-type discordance were driven solely by low variant count, concordance should increase monotonically with the number of variants and eventually converge to a shared ceiling. A plateau in concordance that differs between type pairs---despite increasing variant count---would indicate an irreducible type-specific signal.
+
+\subsection*{Population differentiation ($\fstmath$)}
+
+Pairwise $\fstmath$ was computed for all 325 unique population pairs ($\binom{26}{2}$) for each variant type using the Hudson estimator \citep{hudson1992}, which is well-suited for genome-wide ratio-of-averages calculations and performs robustly with unequal sample sizes \citep{bhatia2013}:
+\begin{equation}
+    \hat{F}_\mathrm{ST} = \frac{(p_1 - p_2)^2 - \frac{p_1(1-p_1)}{n_1 - 1} - \frac{p_2(1-p_2)}{n_2 - 1}}{p_1(1-p_2) + p_2(1-p_1)}
+\end{equation}
+where $p_i$ and $n_i$ denote the alternate allele frequency and diploid sample size in population $i$, respectively. Genome-wide $\fstmath$ was obtained as the ratio of summed numerators to summed denominators across all variants, which is equivalent to a weighted average that gives more weight to higher-heterozygosity loci. Per-locus estimates were floored at zero. Per-population allele frequencies were computed using \texttt{plink2 --freq}. Cross-type concordance of $\fstmath$ values was quantified using Pearson and Spearman rank correlation coefficients across all 325 population pairs.
+
+\subsection*{Size-stratified $\fstmath$ analysis}
+
+To test whether population differentiation scales with variant size, we partitioned INDELs and SVs by the absolute difference between reference and alternate allele lengths into size bins: 1~bp ($n = 1{,}470{,}230$), 2--5~bp ($n = 1{,}299{,}415$), 6--20~bp ($n = 494{,}238$), and 21--50~bp ($n = 64{,}753$) for INDELs; and 50--200~bp ($n = 17{,}550$) for SVs. The vast majority of SVs in our filtered call set fell within the 50--200~bp range, reflecting the size distribution of short-read-detectable structural variants. For each size bin, we extracted the corresponding variants, computed per-population allele frequencies, and calculated genome-wide $\fstmath$ across all 325 population pairs as described above.
+
+\subsection*{Structural variant subtype analysis}
+
+SVs were classified into deletions (DEL; alternate allele shorter than reference, $n = 14{,}091$) and insertions (INS; alternate allele longer than reference, $n = 4{,}428$) based on allele length comparison. Per-subtype $\fstmath$ was computed across all 325 population pairs, and per-subtype site frequency spectra were characterized within each super-population, to test whether the direction of the structural rearrangement modulates population differentiation and allele frequency dynamics.
+
+\subsection*{Site frequency spectrum analysis}
+
+The site frequency spectrum (SFS) was characterized for each variant type within each of the five super-populations. For each variant, we computed the minor allele frequency (MAF) as $\min(p, 1-p)$ from the super-population-specific allele frequency. We summarized the SFS using mean MAF, the proportion of rare variants (MAF $< 0.05$), and distributional skewness. Pairwise comparisons of SFS shape between variant types within each super-population were performed using the two-sample Kolmogorov-Smirnov (KS) test, with correction for multiple testing via the Benjamini-Hochberg false discovery rate (FDR) procedure at $\alpha = 0.05$ \citep{benjamini1995}. To control for the different MAF thresholds applied during variant extraction (0.01 for SNVs and INDELs versus 0.005 for SVs), we repeated the SFS analysis applying a uniform MAF $\geq 0.01$ filter to all three variant types.
+
+\subsection*{Population tree reconstruction}
+
+To visualize population relationships implied by each variant type, we constructed UPGMA (unweighted pair group method with arithmetic mean) dendrograms from the $26 \times 26$ pairwise $\fstmath$ distance matrices using \texttt{scipy.cluster.hierarchy} \citep{virtanen2020}. Cross-type topological concordance was assessed via the Pearson correlation of the upper triangles of pairwise $\fstmath$ distance matrices.
+
+\subsection*{Mantel test}
+
+To assess the correlation between pairwise genetic distance matrices derived from different variant types, we performed Mantel tests \citep{mantel1967} with permutation-based significance testing. Pairwise Euclidean distance matrices were computed in the space of the first 10 PCs for each variant type. The observed Pearson correlation between distance matrices from two variant types was compared to a null distribution generated by 999 random permutations of sample labels, which accounts for the non-independence inherent in pairwise distance comparisons.
+
+\subsection*{Software and reproducibility}
+
+All analyses were performed on a Linux server with 128 CPU cores and 1~TB RAM. Key software versions: \texttt{bcftools} 1.17, \texttt{plink2} v2.00a, Python 3.10 with \texttt{numpy} 1.24, \texttt{scipy} 1.11, \texttt{pandas} 2.0, \texttt{matplotlib} 3.7, and \texttt{seaborn} 0.12. Random seeds (42, 123, 456) were used for all stochastic analyses to ensure reproducibility. Complete analysis scripts are available in the project repository.

@@ -1,0 +1,85 @@
+# Research Anchor — Phase 0
+# Generated: 2026-02-28
+
+domain: Population Genetics / Human Genomics
+subdomain: Comparative population genomics of human genetic variation
+research_type: D  # Discovery — data-driven biological insights
+
+expert_persona:
+  role: Senior Population Geneticist
+  specialty: Human evolutionary genetics and global genetic diversity
+  years_experience: 15+
+  typical_venues:
+    - Nature Genetics
+    - American Journal of Human Genetics
+    - Genome Research
+    - PLOS Genetics
+    - Molecular Biology and Evolution
+
+reviewer_focus:
+  - Mechanism chains linking observations to biological processes
+  - Alternative explanation exclusion (drift vs selection vs demography)
+  - Batch effects and technical artifacts in sequencing data
+  - Population structure confounds
+  - Multiple testing correction
+  - Biological plausibility of findings
+  - Appropriate demographic model assumptions
+  - Reproducibility of computational analyses
+
+resources:
+  compute:
+    cpus: 128
+    ram_gb: 1024
+    gpus: "8x NVIDIA L20 (46GB each)"
+    gpu_constraint: "No deep learning training allowed"
+    disk_available_gb: 407
+  data:
+    source: "1000 Genomes Project — 2022 high-coverage release"
+    samples: 3202
+    populations: 26
+    chromosomes: "chr1-22, chrX"
+    variant_types: "SNV, INDEL, SV (phased)"
+    reference_genome: hg38
+    additional_files:
+      - "Pre-computed allele frequencies per chromosome"
+      - "Sample metadata (population, sex, family relationships)"
+      - "PED file with pedigree information"
+  tools:
+    cli: ["bcftools", "plink2", "tabix", "vcftools"]
+    python:
+      - scikit-allel
+      - pysam
+      - pandas
+      - scipy
+      - scikit-learn
+      - UMAP
+      - matplotlib
+      - seaborn
+      - statsmodels
+      - xgboost
+      - biopython
+  deadline: none
+
+project_intent:
+  primary: Discovery
+  secondary: null
+
+venue_target:
+  primary: PLOS Genetics
+  alternatives:
+    - Genome Research
+    - Molecular Biology and Evolution
+
+research_question: >
+  Do SNVs, INDELs, and SVs produce concordant or discordant signals of
+  population structure, differentiation, and evolutionary history across 26
+  human populations from the 1000 Genomes Project high-coverage panel? We
+  hypothesize that if variant types reflect the same demographic history,
+  their signals should be concordant; systematic discordance would indicate
+  variant-type-specific evolutionary forces. We quantify concordance using
+  Procrustes analysis of PCA spaces, FST correlation across population pairs,
+  and SFS shape comparison. When discordances occur, we test whether they
+  reflect (a) variant-type-specific selection pressures, (b) mutation rate
+  differences, or (c) differential sensitivity to demographic processes.
+
+confirmed_by_user: true
