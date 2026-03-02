@@ -53,7 +53,7 @@ Small insertions and deletions (indels) represent the second most abundant class
 
 The characterization of human genetic variation is fundamental to understanding population history, disease susceptibility, and the mechanisms of mutagenesis. While single nucleotide variants (SNVs) have been the primary focus of population genetic studies, small insertions and deletions (indels) represent the second most abundant class of variation in human genomes \citep{1000genomes2015,byrska2022high}. Indels contribute substantially to human phenotypic diversity and disease risk, with approximately 1.5--2 million short indels segregating in any individual genome \citep{mullaney2010small,montgomery2013mutation}.
 
-The mutational processes that generate indels differ fundamentally from those producing SNVs. While SNVs arise predominantly through base misincorporation during DNA replication and chemical modification of bases, indels are generated through mechanistically distinct processes including replication slippage at microsatellites and homopolymer tracts, template switching during DNA repair, errors in non-homologous end joining, and microhomology-mediated recombination \citep{levinson1987slipped,pearson2005repeat,chen2014genomic}. Each of these mechanisms produces indels with characteristic size distributions and sequence contexts, analogous to how distinct mutational processes produce recognizable SNV signatures in cancer genomes \citep{alexandrov2013signatures,alexandrov2020repertoire}.
+The mutational processes that generate indels differ fundamentally from those producing SNVs. While SNVs arise predominantly through base misincorporation during DNA replication and chemical modification of bases, indels are generated through mechanistically distinct processes including replication slippage at microsatellites and homopolymer tracts, template switching during DNA repair, errors in non-homologous end joining, and microhomology-mediated recombination \citep{levinson1987slipped,pearson2005repeat,chuzhanova2003meta}. Each of these mechanisms produces indels with characteristic size distributions and sequence contexts, analogous to how distinct mutational processes produce recognizable SNV signatures in cancer genomes \citep{alexandrov2013signatures,alexandrov2020repertoire}.
 
 In the cancer genomics field, the analysis of mutational signatures has been transformative. The Catalogue of Somatic Mutations in Cancer (COSMIC) has catalogued 18 indel signatures (ID1--ID18) associated with specific mutagenic processes such as defective DNA mismatch repair, polymerase slippage, and tobacco exposure \citep{alexandrov2020repertoire}. However, the systematic characterization of germline indel mutation spectra---and particularly their variation across human populations---has received far less attention.
 
@@ -235,7 +235,7 @@ The most striking finding is the elevated DEL/INS ratio and enrichment of GC-con
 
 First, population-specific differences in oxidative DNA damage profiles could affect the rate of GC-targeted mutagenesis. 8-oxoguanine, a common oxidative lesion, preferentially affects guanine residues and can lead to deletions during error-prone repair \citep{david2007chemistry}. Environmental and lifestyle factors that influence oxidative stress levels could contribute to population-level variation in GC-deletion rates.
 
-Second, differences in the efficiency or fidelity of specific DNA repair pathways---particularly mismatch repair (MMR) and base excision repair (BER)---could modulate the indel spectrum. Population-specific polymorphisms in DNA repair genes have been documented \citep{lin2012population} and could influence the relative rates of different indel-generating mechanisms.
+Second, differences in the efficiency or fidelity of specific DNA repair pathways---particularly mismatch repair (MMR) and base excision repair (BER)---could modulate the indel spectrum. Population-specific polymorphisms in DNA repair genes have been documented \citep{mathonnet2003variable} and could influence the relative rates of different indel-generating mechanisms.
 
 Third, the enrichment of multi-base deletions (3--10 bp) in African populations suggests elevated rates of microhomology-mediated end joining (MMEJ) or alternative end joining pathways. These repair mechanisms generate deletions with characteristic microhomology signatures at junctions \citep{mcvey2008mmej} and may vary in activity across populations.
 
@@ -247,7 +247,7 @@ The hierarchical clustering of populations based on indel spectra recapitulates 
 
 \subsection{Comparison with Somatic Indel Signatures}
 
-The germline indel signatures identified by our NMF decomposition show notable parallels with COSMIC somatic indel signatures. Our Signature 1 (AT-slippage) shares features with COSMIC ID1 (insertion of T at long T homopolymers) and ID2 (insertion of T at long T homopolymers, associated with defective MMR) \citep{alexandrov2020repertoire}. Our Signature 2 (GC-deletion) has similarities with signatures associated with DNA damage-induced deletions. However, the germline context differs fundamentally from the somatic context: germline indels accumulate over generations and are subject to purifying selection, while somatic signatures reflect acute mutagenic processes within individual lifetimes. The population-level variation in germline signature contributions may reflect long-term differences in mutagenic exposures and repair capacities that have been shaped by evolutionary history.
+The germline indel signatures identified by our NMF decomposition show notable parallels with COSMIC somatic indel signatures. Our Signature 1 (AT-slippage) shares features with COSMIC ID1 (insertion of T at long T homopolymers) and ID2 (deletion of T at long T homopolymers), both associated with replication slippage and defective MMR \citep{alexandrov2020repertoire}. Our Signature 2 (GC-deletion) has similarities with signatures associated with DNA damage-induced deletions. However, the germline context differs fundamentally from the somatic context: germline indels accumulate over generations and are subject to purifying selection, while somatic signatures reflect acute mutagenic processes within individual lifetimes. The population-level variation in germline signature contributions may reflect long-term differences in mutagenic exposures and repair capacities that have been shaped by evolutionary history.
 
 \subsection{Limitations and Future Directions}
 
@@ -286,8 +286,8 @@ Byrska-Bishop, M., Evani, U.~S., Zhao, X., et~al. (2022). High-coverage whole-ge
 \bibitem[Chaisson et~al.(2019)]{chaisson2019multi}
 Chaisson, M.~J., Sanders, A.~D., Zhao, X., et~al. (2019). Multi-platform discovery of haplotype-resolved structural variation in human genomes. \textit{Nature Communications}, 10(1), 1784.
 
-\bibitem[Chen \& Bhargava(2014)]{chen2014genomic}
-Chen, J. M. \& Bhargava, R. (2014). Genomic deletions and insertions in human diseases. \textit{Current Opinion in Genetics \& Development}, 29, 1--6.
+\bibitem[Chuzhanova et~al.(2003)]{chuzhanova2003meta}
+Chuzhanova, N.~A., Anassis, E.~J., Ball, E.~V., Krawczak, M., \& Cooper, D.~N. (2003). Meta-analysis of indels causing human genetic disease: mechanisms of mutagenesis and the role of local DNA sequence complexity. \textit{Human Mutation}, 21(1), 28--44.
 
 \bibitem[Danecek et~al.(2021)]{danecek2021twelve}
 Danecek, P., Bonfield, J.~K., Liddle, J., et~al. (2021). Twelve years of SAMtools and BCFtools. \textit{GigaScience}, 10(2), giab008.
@@ -307,8 +307,8 @@ Lee, D.~D. \& Seung, H.~S. (1999). Learning the parts of objects by non-negative
 \bibitem[Levinson \& Gutman(1987)]{levinson1987slipped}
 Levinson, G. \& Gutman, G.~A. (1987). Slipped-strand mispairing: a major mechanism for DNA sequence evolution. \textit{Molecular Biology and Evolution}, 4(3), 203--221.
 
-\bibitem[Lin et~al.(2012)]{lin2012population}
-Lin, J., Swan, G.~E., Shields, P.~G., et~al. (2012). Population differences in DNA repair genes. \textit{Human Genetics}, 131(3), 367--378.
+\bibitem[Mathonnet et~al.(2003)]{mathonnet2003variable}
+Mathonnet, G., Labuda, D., Meloche, C., Wambach, T., Krajinovic, M., \& Sinnett, D. (2003). Variable continental distribution of polymorphisms in the coding regions of DNA-repair genes. \textit{Journal of Human Genetics}, 48(12), 659--664.
 
 \bibitem[McVey \& Lee(2008)]{mcvey2008mmej}
 McVey, M. \& Lee, S.~E. (2008). MMEJ repair of double-strand breaks (director's cut): deleted sequences and alternative endings. \textit{Trends in Genetics}, 24(11), 529--538.

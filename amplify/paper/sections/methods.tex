@@ -18,11 +18,11 @@ Chromosomes were processed in parallel (11 concurrent jobs) and per-chromosome V
 
 \subsection*{Linkage disequilibrium pruning}
 
-To produce sets of approximately independent markers for principal component analysis, we performed LD pruning on SNVs and INDELs using \texttt{plink2 --indep-pairwise} with a window of 50 variants, a step size of 5, and a pairwise $r^2$ threshold of 0.2, following standard practice for population structure analyses \citep{abdellaoui2013, price2006}. This retained 2,291,979 LD-pruned SNVs and 1,190,449 LD-pruned INDELs. SVs were not subjected to LD pruning because their sparse genomic distribution ($\sim$18,500 variants across 22 autosomes, or roughly one per 165~kb) renders inter-variant LD negligible.
+To produce sets of approximately independent markers for principal component analysis, we performed LD pruning on SNVs and INDELs using \texttt{plink2 --indep-pairwise} with a window of 50 variants, a step size of 5, and a pairwise $r^2$ threshold of 0.2, following standard practice for population structure analyses \citep{abdellaoui2013, price2006}. This retained 2,291,746 LD-pruned SNVs and 1,194,489 LD-pruned INDELs. SVs were not subjected to LD pruning because their sparse genomic distribution ($\sim$18,500 variants across 22 autosomes, or roughly one per 165~kb) renders inter-variant LD negligible.
 
 \subsection*{Principal component analysis}
 
-PCA was performed independently for each variant type using \texttt{plink2 --pca 20}, extracting the top 20 principal components from the genetic relationship matrix. All 3,202 samples were included in each analysis. For SNVs and INDELs, PCA was computed on the LD-pruned marker sets; for SVs, PCA was computed on the full post-filter set of 18,519 variants. The first two PCs captured the majority of genetic variance for all three types (SNV PC1: 54.4\%, PC2: 24.7\%; INDEL PC1: 54.6\%, PC2: 23.3\%; SV PC1: 50.7\%, PC2: 20.6\%).
+PCA was performed independently for each variant type using \texttt{plink2 --pca 20}, extracting the top 20 principal components from the genetic relationship matrix. All 3,202 samples were included in each analysis. For SNVs and INDELs, PCA was computed on the LD-pruned marker sets; for SVs, PCA was computed on the full post-filter set of 18,519 variants. The first two PCs captured the majority of genetic variance for all three types (SNV PC1: 54.4\%, PC2: 17.7\%; INDEL PC1: 54.6\%, PC2: 16.0\%; SV PC1: 50.7\%, PC2: 13.9\%).
 
 \subsection*{Procrustes analysis of PCA concordance}
 
